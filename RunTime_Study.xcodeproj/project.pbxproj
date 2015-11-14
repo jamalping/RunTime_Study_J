@@ -15,6 +15,7 @@
 		00A764341BF5CCE200BC4118 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00A764321BF5CCE200BC4118 /* LaunchScreen.storyboard */; };
 		00A7643F1BF5CCE200BC4118 /* RunTime_StudyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A7643E1BF5CCE200BC4118 /* RunTime_StudyTests.m */; };
 		00A7644A1BF5CCE200BC4118 /* RunTime_StudyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A764491BF5CCE200BC4118 /* RunTime_StudyUITests.m */; };
+		00A764631BF5D0A200BC4118 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00A764621BF5D0A200BC4118 /* TestViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		00A764451BF5CCE200BC4118 /* RunTime_StudyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunTime_StudyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A764491BF5CCE200BC4118 /* RunTime_StudyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RunTime_StudyUITests.m; sourceTree = "<group>"; };
 		00A7644B1BF5CCE200BC4118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00A764611BF5D0A200BC4118 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		00A764621BF5D0A200BC4118 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +108,8 @@
 				00A764281BF5CCE200BC4118 /* AppDelegate.m */,
 				00A7642A1BF5CCE200BC4118 /* ViewController.h */,
 				00A7642B1BF5CCE200BC4118 /* ViewController.m */,
+				00A764611BF5D0A200BC4118 /* TestViewController.h */,
+				00A764621BF5D0A200BC4118 /* TestViewController.m */,
 				00A7642D1BF5CCE200BC4118 /* Main.storyboard */,
 				00A764301BF5CCE200BC4118 /* Assets.xcassets */,
 				00A764321BF5CCE200BC4118 /* LaunchScreen.storyboard */,
@@ -272,6 +277,7 @@
 			files = (
 				00A7642C1BF5CCE200BC4118 /* ViewController.m in Sources */,
 				00A764291BF5CCE200BC4118 /* AppDelegate.m in Sources */,
+				00A764631BF5D0A200BC4118 /* TestViewController.m in Sources */,
 				00A764261BF5CCE200BC4118 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
