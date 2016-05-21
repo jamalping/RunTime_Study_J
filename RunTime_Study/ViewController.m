@@ -19,8 +19,8 @@
 @property (nonatomic,copy)void(^MyBlock)(NSString *sr1); /** block*/
 
 @end
-
 @implementation ViewController
+//@dynamic MyBlock;
 - (IBAction)click:(id)sender {
     NSLog(@"click");
 }
@@ -32,7 +32,7 @@
     [son test];
     
     self.MyBlock = ^(NSString *str1){
-        NSLog(@"我是block的String");
+        NSLog(@"我是block的%@",str1);
     };
 
     unsigned int count;
@@ -75,8 +75,13 @@
     
 ///-------------------------------------添加方法的实现----------------------------------------
     IMP imp = imp_implementationWithBlock(^(id self,NSString *string,NSString *str2) {
-        NSLog(@"我是方法的实现%@,%@,%@",self,string,str2);
-        
+//        NSLog(@"我是方法的实现%@,%@,%@",self,string,str2);
+        if ([self isKindOfClass:[ViewController class]]) {
+            ViewController *vc = (ViewController *)self;
+            if (vc.MyBlock) {
+                vc.MyBlock(string);
+            }
+        }
     });
     
     class_addMethod(self.class, @selector(fun:str2:), imp, "@:@");
@@ -122,9 +127,12 @@ NSString *runAddMethod(id self, SEL _cmd, NSString *string,NSString *dd){
 ///-------------------------------------关联对象----------------------------------------
 static char associatedObjectKey;//首先定义一个全局变量，用它的地址作为关联对象的key
 - (void)tianJiaGuanLianDuiXiang {
-    objc_setAssociatedObject(self, &associatedObjectKey, @"添加的字符串属性", OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, &associatedObjectKey, self.MyBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (id)getGuanlianduixiang {
     NSLog(@"AssociatedObject = %@", objc_getAssociatedObject(self, &associatedObjectKey));
-    
+    return objc_getAssociatedObject(self, &associatedObjectKey);
 }
 
 
