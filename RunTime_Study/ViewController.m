@@ -7,16 +7,33 @@
 //
 
 #import "ViewController.h"
+#import "Father.h"
+#import "Son.h"
 #import <objc/runtime.h>
+#import "TestViewController.h"
+@import ObjectiveC.message;
 
 @interface ViewController ()
+
+- (void)fun:(NSString *)str1 str2:(NSString *)str2;
+@property (nonatomic,copy)void(^MyBlock)(NSString *sr1); /** block*/
 
 @end
 
 @implementation ViewController
+- (IBAction)click:(id)sender {
+    NSLog(@"click");
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    Father *father = [Father new];
+    Son *son = [Son new];
+    [son test];
+    
+    self.MyBlock = ^(NSString *str1){
+        NSLog(@"我是block的String");
+    };
 
     unsigned int count;
     // 获取属性列表
@@ -46,15 +63,27 @@
     // 获取协议列表
     __unsafe_unretained Protocol **protocolList = class_copyProtocolList(NSClassFromString(@"TestViewController"), &count);
     for (int i = 0;i < count; i++) {
-        NSLog(@"%@",NSStringFromProtocol(protocolList[i]));
+        NSLog(@"protocol List%@",NSStringFromProtocol(protocolList[i]));
     }
     
 ///-------------------------------------方法的调用----------------------------------------
     [self performSelector:@selector(resolveAdd:) withObject:@"test"];
     
-    [self performSelector:@selector(ttttttttt:) withObject:@"ttttt"];
-    
+    NSString *result = [self performSelector:@selector(ttttttttt:) withObject:@"ttttt" withObject:@"dd"];
+    NSLog(@"result:%@",result);
     [self tianJiaGuanLianDuiXiang];
+    
+///-------------------------------------添加方法的实现----------------------------------------
+    IMP imp = imp_implementationWithBlock(^(id self,NSString *string,NSString *str2) {
+        NSLog(@"我是方法的实现%@,%@,%@",self,string,str2);
+        
+    });
+    
+    class_addMethod(self.class, @selector(fun:str2:), imp, "@:@");
+    [self fun:@"s1" str2:@"s2"];
+///-------------------------------------交换方法的实现----------------------------------------
+    method_exchangeImplementations(class_getInstanceMethod(self.class, @selector(test:)), class_getInstanceMethod(NSClassFromString(@"TestViewController"), @selector(resolveAdd:)));
+    [self test:@"我调用的是test1"];
 }
 
 
@@ -64,7 +93,7 @@
     if ([NSStringFromSelector(sel) isEqualToString:@"ttttttttt:"]) {
         
 //        return class_addMethod(self, sel, class_getMethodImplementation(self, @selector(test:)), "v@:*");
-        class_addMethod(self, sel, (IMP)runAddMethod, "v@:*");
+        class_addMethod(self, sel, (IMP)runAddMethod, " "); // v 表示Void，@ 表示self，：表示_cmd,* 表示参数
     }
     return YES;
 }
@@ -81,8 +110,13 @@
     NSLog(@"test %@",string);
 }
 
-void runAddMethod(id self, SEL _cmd, NSString *string){
-    NSLog(@"add C IMP %@", string);
+- (void)test1:(NSString *)string {
+    NSLog(@"test1 %@",string);
+}
+
+NSString *runAddMethod(id self, SEL _cmd, NSString *string,NSString *dd){
+    NSLog(@"add C IMP%@ %@..%@",self, string,dd);
+    return @"d";
 }
 
 ///-------------------------------------关联对象----------------------------------------
